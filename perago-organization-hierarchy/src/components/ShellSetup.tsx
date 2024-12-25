@@ -9,13 +9,14 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 import Link from "next/link"; 
+import ProviderWrapper from './ProviderWrapper';
 
 
 const ShellSetup = ({children}: any) => {
     const [opened, { toggle, close }] = useDisclosure();
 
   return (
-    <>
+    <ProviderWrapper>
       <AppShell header={{ height: 70 }} padding="md" withBorder={false}>
         <AppShell.Header  >
           <div className="flex bg-white w-screen items-center justify-between border-b border-gray-400 h-16">
@@ -68,7 +69,7 @@ const ShellSetup = ({children}: any) => {
         <Link className='hover:bg-emerald-100 text-black text-lg' href={'/positions'}>Positions</Link>
 
       </Drawer>
-    </>
+    </ProviderWrapper>
   );
 }
 

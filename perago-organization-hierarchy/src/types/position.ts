@@ -8,6 +8,6 @@ export interface Position {
   export interface CreatePosition {
     name: string;
     description: string;
-    parentId: number | null;
+    parentId?: number | null;
   }
   
