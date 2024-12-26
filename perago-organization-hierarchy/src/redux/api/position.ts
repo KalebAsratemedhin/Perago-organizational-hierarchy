@@ -12,9 +12,9 @@ export const apiSlice = createApi({
     }),
     getPosition: builder.query<Position, number>({
       query: (id) => `positions/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Positions', id }],
+      providesTags: ['Positions'],
     }),
-    createPosition: builder.mutation<void, CreatePosition>({
+    addPosition: builder.mutation<void, CreatePosition>({
       query: (newPosition) => ({
         url: 'positions',
         method: 'POST',
@@ -28,14 +28,15 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: updatedPosition,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Positions', id }],
+      invalidatesTags: ['Positions'],
     }),
     deletePosition: builder.mutation<void, number>({
       query: (id) => ({
         url: `positions/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Positions', id }],
+      invalidatesTags: ['Positions'],
+
     }),
   }),
 });
@@ -43,7 +44,7 @@ export const apiSlice = createApi({
 export const {
   useGetPositionsQuery,
   useGetPositionQuery,
-  useCreatePositionMutation,
+  useAddPositionMutation,
   useUpdatePositionMutation,
   useDeletePositionMutation,
 } = apiSlice;

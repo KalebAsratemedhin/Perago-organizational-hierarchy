@@ -12,8 +12,11 @@ export default function Home() {
   return (
     <div>
       <Title>Employee Hierarchy</Title>
-      {positions?.length}
-      {positions && <PositionTree data={positions} />}
+      {positions && <PositionTree
+          data={positions}
+          onDelete={(position) => console.log('Delete:', position)}
+        />
+      }
     </div>
-  );
+  );  
 }
