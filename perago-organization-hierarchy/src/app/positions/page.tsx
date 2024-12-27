@@ -7,16 +7,16 @@ import PositionTree from '@/components/PositionTree';
 export default function Page() {
   const { data: positions, isLoading } = useGetPositionsQuery();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader m={'xl'} />;
 
   return (
-    <div>
+    <div className='p-6'>
       <Title>Employee Hierarchy</Title>
       {positions && <PositionTree
           data={positions}
-          onDelete={(position) => console.log('Delete:', position)}
         />
       }
+      
     </div>
   );  
 }

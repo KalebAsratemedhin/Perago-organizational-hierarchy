@@ -2,12 +2,11 @@ export interface Position {
     id: number;
     name: string;
     description: string;
-    parentId: number | null;
+    parentId: number;
   }
   
-  export interface CreatePosition {
-    name: string;
-    description: string;
-    parentId?: number | null;
-  }
-  
+export interface PositionFormValues {
+  name: string;
+  description: string;
+  parentId: number;
+}

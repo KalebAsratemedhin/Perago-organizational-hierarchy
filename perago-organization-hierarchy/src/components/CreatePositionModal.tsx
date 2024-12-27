@@ -3,26 +3,13 @@ import { Modal, TextInput, Button, Group, Select } from '@mantine/core';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Position } from '@/types/position';
-import { useAddPositionMutation, useUpdatePositionMutation } from '@/redux/api/position';
+import { PositionFormValues } from '@/types/position';
+import { useAddPositionMutation } from '@/redux/api/position';
 
 interface CreatePositionModalProps {
   opened: boolean;
   onClose: () => void;
   parentOptions: { value: number; label: string }[];
-}
-
-interface UpdatePositionModalProps {
-  opened: boolean;
-  onClose: () => void;
-  position: Position;
-  parentOptions: { value: number; label: string }[];
-}
-
-interface PositionFormValues {
-  name: string;
-  description: string;
-  parentId: number;
 }
 
 const schema = yup.object().shape({
@@ -73,12 +60,11 @@ const CreatePositionModal: React.FC<CreatePositionModalProps> = ({ opened, onClo
         <Select
           label="Parent Position"
           placeholder="Select parent position"
-          data={parentOptions}
           {...register('parentId', { valueAsNumber: true })}
           error={errors.parentId?.message}
           onChange={(value) => setValue('parentId', Number(value))}
         />
-        <Group position="right" mt="md">
+        <Group mt="md">
           <Button onClick={onClose} variant="outline">
             Cancel
           </Button>

@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Position } from '@/types/position';
 import * as yup from 'yup';
 import { useUpdatePositionMutation } from '@/redux/api/position';
+import { PositionFormValues } from '@/types/position';
 
 interface UpdatePositionModalProps {
   opened: boolean;
@@ -13,11 +14,6 @@ interface UpdatePositionModalProps {
   parentOptions: { value: number; label: string }[];
 }
 
-interface PositionFormValues {
-  name: string;
-  description: string;
-  parentId: number;
-}
 
 const schema = yup.object().shape({
     name: yup.string().required('Name is required'),
@@ -41,10 +37,9 @@ const UpdatePositionModal: React.FC<UpdatePositionModalProps> = ({
     setValue,
     formState: { errors },
   } = useForm<PositionFormValues>({
-    resolver: yupResolver(schema), // Ensure the schema is defined
+    resolver: yupResolver(schema), 
   });
 
-  // Reset form when position changes
   useEffect(() => {
     if (position) {
       reset({
@@ -82,12 +77,11 @@ const UpdatePositionModal: React.FC<UpdatePositionModalProps> = ({
         <Select
           label="Parent Position"
           placeholder="Select parent position"
-          data={parentOptions}
           {...register('parentId', { valueAsNumber: true })}
           error={errors.parentId?.message}
           onChange={(value) => setValue('parentId', Number(value))}
         />
-        <Group position="right" mt="md">
+        <Group mt="md">
           <Button onClick={onClose} variant="outline" disabled={isLoading}>
             Cancel
           </Button>

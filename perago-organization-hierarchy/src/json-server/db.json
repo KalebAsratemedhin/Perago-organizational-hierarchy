@@ -17,30 +17,6 @@
       "name": "CFO",
       "description": "Chief Financial Officer",
       "parentId": 1
-    },
-    {
-      "id": "d0b2",
-      "name": "Senior Developer",
-      "description": "senior dev",
-      "parentId": 0
-    },
-    {
-      "id": "2f4a",
-      "name": "Sales Person",
-      "description": "business expert",
-      "parentId": 3
-    },
-    {
-      "id": "787a",
-      "name": "Accountant",
-      "description": "accounting personnel",
-      "parentId": 3
-    },
-    {
-      "id": "64e7",
-      "name": "Project Manager",
-      "description": "Highlevel responsibility for projects in the company",
-      "parentId": 2
     }
   ]
 }
