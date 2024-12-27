@@ -1,16 +1,11 @@
 'use client';
 
-import { Title, Loader, Card } from '@mantine/core';
-import { useGetPositionsQuery } from '@/redux/api/position';
-import PositionTree from '@/components/PositionTree';
+import {Card, Text } from '@mantine/core';
 export default function Home() {
-  const { data: positions, isLoading } = useGetPositionsQuery();
-
-  if (isLoading) return <Loader />;
 
   return (
-    <Card>
-      
+    <Card m={'xl'} p={'xl'}>
+      <Text>Welcome to Organizational Hierarchy Chart</Text>
     </Card>
   );  
 }

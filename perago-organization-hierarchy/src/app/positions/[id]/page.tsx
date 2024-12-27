@@ -11,7 +11,7 @@ import { useParams } from 'next/navigation';
 const PositionDetailsPage = () => {
   const router = useRouter();
   const { id }: {id: string} = useParams(); 
-  const { data: position, isLoading, isError, error } = useGetPositionQuery(parseInt(id!));  
+  const { data: position, isLoading, isError, error } = useGetPositionQuery(id);  
   const [deletePosition] = useDeletePositionMutation();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -64,7 +64,7 @@ const PositionDetailsPage = () => {
         </div>
       </div>
 
-      <UpdatePositionModal opened={editModalOpen} onClose={() => setEditModalOpen(false)} position={position} parentOptions={[]} />
+      <UpdatePositionModal opened={editModalOpen} onClose={() => setEditModalOpen(false)} position={position} />
 
       <Modal opened={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title="Confirm Deletion">
         <Text>Are you sure you want to delete the position "{position.name}"?</Text>

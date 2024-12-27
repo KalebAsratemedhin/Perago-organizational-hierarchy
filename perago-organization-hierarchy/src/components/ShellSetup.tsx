@@ -27,7 +27,7 @@ const ShellSetup = ({ children }: { children: React.ReactNode }) => {
               
               <Text className="text-xl font-bold text-gray-800">Organizational Hierarchy Chart</Text>
             </div>
-            <div className="gap-6 flex items-center">
+            <div className="gap-6 hidden md:flex items-center">
               
               <Link
                 className="px-4 py-2 rounded-full hover:bg-emerald-600 hover:text-white transition-all duration-200"
@@ -55,7 +55,7 @@ const ShellSetup = ({ children }: { children: React.ReactNode }) => {
               <Text className="text-xl font-bold text-gray-800">Organizational Hierarchy Chart</Text>
 
               <Text>
-                <a href="mailto:risekab@gmail.com" className="underline">perago</a>
+                <Link href="mailto:risekab@gmail.com" className="hover:underline hover:underline-offset-8 hover:text-emerald-400">perago</Link>
               </Text>
             </Box>
           </div>

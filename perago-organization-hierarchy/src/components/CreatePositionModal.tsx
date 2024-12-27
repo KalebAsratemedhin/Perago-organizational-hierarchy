@@ -9,30 +9,29 @@ import { useAddPositionMutation } from '@/redux/api/position';
 interface CreatePositionModalProps {
   opened: boolean;
   onClose: () => void;
-  parentOptions: { value: number; label: string }[];
+  parentId: string;
 }
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
   description: yup.string().required('Description is required'),
-  parentId: yup.number().required('Parent ID is required').typeError('Parent ID must be a number'),
+  parentId: yup.string().required('Parent ID is required')
 });
 
-const CreatePositionModal: React.FC<CreatePositionModalProps> = ({ opened, onClose, parentOptions }) => {
+const CreatePositionModal: React.FC<CreatePositionModalProps> = ({ opened, onClose, parentId }) => {
   const [addPosition] = useAddPositionMutation();
 
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<PositionFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: '',
       description: '',
-      parentId: 0,
+      parentId: parentId,
     },
   });
 
@@ -56,14 +55,14 @@ const CreatePositionModal: React.FC<CreatePositionModalProps> = ({ opened, onClo
           placeholder="Enter position description"
           {...register('description')}
           error={errors.description?.message}
+        /><TextInput
+          label="Parent Id"
+          {...register('parentId')}
+          disabled
+          value={parentId}
+          error={errors.description?.message}
         />
-        <Select
-          label="Parent Position"
-          placeholder="Select parent position"
-          {...register('parentId', { valueAsNumber: true })}
-          error={errors.parentId?.message}
-          onChange={(value) => setValue('parentId', Number(value))}
-        />
+        
         <Group mt="md">
           <Button onClick={onClose} variant="outline">
             Cancel

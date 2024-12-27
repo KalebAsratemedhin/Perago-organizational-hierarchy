@@ -14,16 +14,17 @@ interface PositionWithChildren extends Position {
 const PositionTree = ({ data }: {data: Position[]}) => {
   const router = useRouter();
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [currentParentId, setCurrentParentId] = useState<string | null>(null);
 
   const buildTree = (
     positions: Position[],
-    parentId: number | null
+    parentId: string | null
   ): PositionWithChildren[] => {
     return positions
       .filter((pos) => pos.parentId === parentId)
       .map((pos) => ({
         ...pos,
-        children: buildTree(positions, Number(pos.id)),
+        children: buildTree(positions, pos.id),
       }));
   };
 
@@ -43,12 +44,12 @@ const PositionTree = ({ data }: {data: Position[]}) => {
                   <IconNavigationUp stroke={1.5} size={20} className="text-gray-600" />
                 </Link>
 
-                <Link
+                <div
                   className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-green-300 transition-colors cursor-pointer"
-                  href={`/positions/${node.id}`}
+                  onClick={() => handleCreate(node.id)}
                 >
                   <IconPlus stroke={1.5} size={20} className="text-gray-600" />
-                </Link>
+                </div>
               </div>
             </div>
           </Group>
@@ -60,6 +61,10 @@ const PositionTree = ({ data }: {data: Position[]}) => {
     ));
   };
 
+  const handleCreate = (parentId: string | null) => {
+    setCurrentParentId(parentId);
+    setCreateModalOpen(true);
+  };
 
   const parentOptions = data.map((position) => ({
     value: position.id,
@@ -76,7 +81,7 @@ const PositionTree = ({ data }: {data: Position[]}) => {
       <CreatePositionModal
         opened={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
-        parentOptions={parentOptions}
+        parentId={currentParentId!}
       />
     </Box>
   );

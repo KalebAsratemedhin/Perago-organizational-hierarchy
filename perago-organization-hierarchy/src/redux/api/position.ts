@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Position, CreatePosition } from '@/types/position';
+import { Position, PositionFormValues } from '@/types/position';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -10,11 +10,11 @@ export const apiSlice = createApi({
       query: () => 'positions',
       providesTags: ['Positions'],
     }),
-    getPosition: builder.query<Position, number>({
+    getPosition: builder.query<Position, string>({
       query: (id) => `positions/${id}`,
       providesTags: ['Positions'],
     }),
-    addPosition: builder.mutation<void, CreatePosition>({
+    addPosition: builder.mutation<void, PositionFormValues>({
       query: (newPosition) => ({
         url: 'positions',
         method: 'POST',
@@ -30,7 +30,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Positions'],
     }),
-    deletePosition: builder.mutation<void, number>({
+    deletePosition: builder.mutation<void, string>({
       query: (id) => ({
         url: `positions/${id}`,
         method: 'DELETE',

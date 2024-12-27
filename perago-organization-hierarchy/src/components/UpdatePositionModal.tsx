@@ -6,19 +6,19 @@ import { Position } from '@/types/position';
 import * as yup from 'yup';
 import { useUpdatePositionMutation } from '@/redux/api/position';
 import { PositionFormValues } from '@/types/position';
+import { watch } from 'fs';
 
 interface UpdatePositionModalProps {
   opened: boolean;
   onClose: () => void;
   position: Position;
-  parentOptions: { value: number; label: string }[];
 }
 
 
 const schema = yup.object().shape({
     name: yup.string().required('Name is required'),
     description: yup.string().required('Description is required'),
-    parentId: yup.number().required('Parent ID is required').typeError('Parent ID must be a number'),
+    parentId: yup.string().required('Parent ID is required')
   });
 
   
@@ -26,7 +26,6 @@ const UpdatePositionModal: React.FC<UpdatePositionModalProps> = ({
   opened,
   onClose,
   position,
-  parentOptions,
 }) => {
   const [updatePosition, { isLoading, isError }] = useUpdatePositionMutation();
 
@@ -52,8 +51,8 @@ const UpdatePositionModal: React.FC<UpdatePositionModalProps> = ({
 
   const handleFormSubmit = async (data: PositionFormValues) => {
     try {
-      await updatePosition({ id: position.id, ...data }).unwrap(); // Using unwrap for error handling
-      onClose(); // Close the modal on successful update
+      await updatePosition({ id: position.id, ...data }).unwrap(); 
+      onClose(); 
     } catch (error) {
       console.error('Error updating position:', error);
     }
@@ -74,13 +73,12 @@ const UpdatePositionModal: React.FC<UpdatePositionModalProps> = ({
           {...register('description')}
           error={errors.description?.message}
         />
-        <Select
-          label="Parent Position"
-          placeholder="Select parent position"
-          {...register('parentId', { valueAsNumber: true })}
-          error={errors.parentId?.message}
-          onChange={(value) => setValue('parentId', Number(value))}
+        <TextInput
+          label="Parent Id"
+          {...register('parentId')}
+          error={errors.description?.message}
         />
+
         <Group mt="md">
           <Button onClick={onClose} variant="outline" disabled={isLoading}>
             Cancel
